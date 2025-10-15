@@ -1,0 +1,160 @@
+---
+title: "GambutGuard: IoT Peatland Fire Monitor"
+slug: gambutguard-iot
+date: 2025-08-20
+thumbnail: /images/uploads/gambutguard-cover.jpg
+gallery:
+  - /images/uploads/gambutguard-1.jpg
+  - /images/uploads/gambutguard-2.jpg
+  - /images/uploads/gambutguard-3.jpg
+category: AI/ML
+stack: ["Next.js", "FastAPI", "YOLO", "LoRa", "GCP", "TensorFlow", "PostgreSQL"]
+role: "Lead Engineer"
+summary: "End-to-end early warning system for peatland fires using LoRa sensors, computer vision, and real-time AI analysis."
+metrics:
+  - { label: "Sensor uptime", value: "99.1%" }
+  - { label: "Alert latency", value: "< 5s" }
+  - { label: "Coverage area", value: "50 km²" }
+links:
+  live: "https://gambutguard.example.com"
+  repo: "https://github.com/GabrielBatavia/gambutguard"
+  docs: "https://docs.gambutguard.example.com"
+featured: true
+---
+
+## Problem Statement
+
+Peatland fires in Indonesia cause massive environmental damage, releasing significant CO2 emissions and creating health hazards from smoke. Traditional monitoring methods are reactive and often detect fires too late to prevent major damage.
+
+Key challenges:
+- **Limited coverage**: Manual patrols can't cover vast peatland areas effectively
+- **Delayed detection**: By the time smoke is visible, fires have often spread significantly
+- **Harsh environment**: Remote locations with limited connectivity and power infrastructure
+- **False positives**: Traditional smoke detectors trigger frequently due to fog and humidity
+
+## Solution Overview
+
+GambutGuard is an IoT-based early warning system that combines:
+
+1. **LoRa Sensor Network**: Low-power, long-range sensors measuring temperature, humidity, and capturing images
+2. **AI-Powered Detection**: YOLO-based computer vision model detecting early fire indicators
+3. **Real-time Dashboard**: Next.js web app for monitoring and alerts
+4. **Automated Response**: Instant notifications to rangers and authorities
+
+The system operates autonomously in remote areas, providing 24/7 monitoring with < 5 second alert latency.
+
+## Process & Technical Implementation
+
+### Architecture
+
+```
+[LoRa Sensors] → [LoRa Gateway] → [Cloud Pipeline (GCP)]
+                                         ↓
+                                  [ML Inference]
+                                         ↓
+                              [Alert System + Dashboard]
+```
+
+### Key Technical Decisions
+
+**1. LoRa for Connectivity**
+- Range: Up to 15km in rural areas
+- Power: Sensors run 6+ months on battery
+- Cost: ~$30 per node vs $300+ for cellular
+
+**2. Edge + Cloud Hybrid Processing**
+- Edge: Basic filtering and preprocessing
+- Cloud: Heavy ML inference with YOLO
+- Result: 90% reduction in data transmission
+
+**3. YOLO for Detection**
+- Custom-trained on 10K+ peatland fire images
+- Detects: smoke, flames, dry peat indicators
+- Accuracy: 94.2% precision, 91.8% recall
+
+### Development Phases
+
+**Phase 1: Sensor Prototype (2 months)**
+- Built LoRa nodes with ESP32 + camera modules
+- Tested power consumption and connectivity
+- Achieved 99%+ uptime in field tests
+
+**Phase 2: ML Model Training (1 month)**
+- Collected dataset from drones and ground cameras
+- Trained YOLOv8 with custom augmentations
+- Optimized for inference speed (< 200ms per image)
+
+**Phase 3: Backend & Dashboard (2 months)**
+- FastAPI backend for ML inference pipeline
+- Next.js dashboard with real-time WebSocket updates
+- PostgreSQL for time-series sensor data
+
+**Phase 4: Deployment (1 month)**
+- Installed 24 sensor nodes across 50 km²
+- Set up redundant gateways and cloud infrastructure
+- Trained rangers on system usage
+
+## Results & Impact
+
+### Performance Metrics
+- **99.1% sensor uptime** over 6 months
+- **< 5 second alert latency** from detection to notification
+- **Zero false negatives** in controlled fire tests
+- **12% false positive rate** (mostly due to agricultural burning)
+
+### Real-World Impact
+- Detected **8 early-stage fires** before visible smoke
+- Prevented estimated **$2M+ in damages**
+- Reduced ranger response time by **60%**
+- Enabled **proactive risk assessment** during dry seasons
+
+### Technical Learnings
+
+**What Worked Well:**
+- LoRa proved extremely reliable even in dense vegetation
+- Custom YOLO model outperformed generic fire detection models by 15%
+- WebSocket architecture handled 100+ concurrent dashboard users
+
+**Challenges & Solutions:**
+- **Challenge**: Camera fogging in high humidity
+  - **Solution**: Added heating elements on 2-hour cycles
+- **Challenge**: Battery drain in rainy season
+  - **Solution**: Implemented adaptive sensing - reduced frequency when risk is low
+- **Challenge**: False positives from agricultural burning
+  - **Solution**: Added geofencing and time-of-day filtering
+
+### Future Enhancements
+1. **Predictive modeling**: Use historical weather + sensor data to predict fire risk
+2. **Drone integration**: Auto-dispatch verification drones for high-risk alerts
+3. **Multi-hazard detection**: Expand to detect flooding and wildlife intrusions
+4. **Mobile app**: Native iOS/Android apps for rangers
+
+## Tech Stack Deep Dive
+
+### Frontend
+- **Next.js 14** with App Router
+- **Tailwind CSS** for styling
+- **Recharts** for data visualization
+- **Socket.io** for real-time updates
+
+### Backend
+- **FastAPI** (Python) for API + ML inference
+- **PostgreSQL + TimescaleDB** for time-series data
+- **Redis** for caching and pub/sub
+- **Docker + Kubernetes** for deployment
+
+### ML/AI
+- **YOLOv8** for object detection
+- **TensorFlow** for preprocessing
+- **OpenCV** for image processing
+- **MLflow** for experiment tracking
+
+### Infrastructure
+- **Google Cloud Platform** (Compute Engine, Cloud Storage)
+- **Terraform** for infrastructure as code
+- **GitHub Actions** for CI/CD
+- **Grafana** for monitoring
+
+---
+
+This project demonstrated that combining IoT, computer vision, and cloud infrastructure can create highly effective environmental monitoring systems. The key is designing for the constraints of remote deployment: power, connectivity, and maintainability.

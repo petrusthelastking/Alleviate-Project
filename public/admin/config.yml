@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: GabrielBatavia/portfolio-petrus
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    extension: "mdx"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL-friendly version of title" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Thumbnail", name: "thumbnail", widget: "image" }
+      - { label: "Gallery", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" }, required: false }
+      - { label: "Category", name: "category", widget: "select", options: ["Design", "AI/ML", "Web", "Blockchain", "Research"] }
+      - { label: "Stack", name: "stack", widget: "list", field: { label: "Tech", name: "tech", widget: "string" } }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Summary", name: "summary", widget: "text", hint: "100-160 characters" }
+      - { label: "Problem", name: "problem", widget: "markdown" }
+      - { label: "Solution", name: "solution", widget: "markdown" }
+      - { label: "Process", name: "process", widget: "markdown" }
+      - { label: "Results", name: "results", widget: "markdown" }
+      - { label: "Metrics", name: "metrics", widget: "list", fields: [{ label: "Label", name: "label", widget: "string" }, { label: "Value", name: "value", widget: "string" }], required: false }
+      - { label: "Links", name: "links", widget: "object", fields: [{ label: "Live", name: "live", widget: "string", required: false }, { label: "Repo", name: "repo", widget: "string", required: false }, { label: "Docs", name: "docs", widget: "string", required: false }], required: false }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
